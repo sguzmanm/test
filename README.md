@@ -22,7 +22,7 @@ Para entender el código fuente del ejemplo, es necesario revisar los siguientes
     │
     ├───co.edu.uniandes.csw.cities.dtos
     │   │   CityDTO.java
-	│   │	CityDetailDTO.java
+    │	│   CityDetailDTO.java
     │   
     └───co.edu.uniandes.csw.cities.mappers
         │   BusinessLogicExceptionMapper.java        
