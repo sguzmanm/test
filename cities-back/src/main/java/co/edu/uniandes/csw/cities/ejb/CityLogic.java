@@ -63,5 +63,16 @@ public class CityLogic {
         LOGGER.info("Termina proceso de consultar todas las cities");
         return editorials;
     }
+        
+        public CityEntity update(Long id, CityEntity entity)
+        {
+            LOGGER.info("Iniciando act");
+            for(CityEntity e:persistence.findAll())
+            {
+                if(e.getId().equals(id)) return persistence.update(entity);
+            }
+            return null;
+        }
+        
 
 }
