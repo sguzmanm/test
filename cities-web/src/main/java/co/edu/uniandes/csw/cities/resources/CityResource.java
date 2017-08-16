@@ -34,8 +34,10 @@ import javax.ejb.Stateless;
 
 import javax.inject.Inject;
 import javax.ws.rs.GET;
+import javax.ws.rs.PUT;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
 /**
@@ -66,11 +68,28 @@ public class CityResource {
         return new CityDetailDTO(nuevoCity);
     }
 
-    @GET
+    
+    
     public List<CityDetailDTO> getCities() throws BusinessLogicException {
         return listEntity2DetailDTO(cityLogic.getCities());
     }
-
+    @GET
+    @Path("{id: \\d+}")
+    public CityDetailDTO getCity(@PathParam("id")Long id)
+    {
+        CityDetailDTO c=null;
+        for(CityEntity e:cityLogic.getCities())
+        {
+            if(e.getId().equals(id)) 
+            {
+                c=new CityDetailDTO(e);
+                break;
+            }
+        }
+        return c;
+    }
+    
+    
     private List<CityDetailDTO> listEntity2DetailDTO(List<CityEntity> entityList) {
         List<CityDetailDTO> list = new ArrayList<>();
         for (CityEntity entity : entityList) {
@@ -78,5 +97,35 @@ public class CityResource {
         }
         return list;
     }
-
+    
+    
+    @PUT
+    @PathParam("{id: \\d+}")
+    public CityDetailDTO updateCity(@PathParam("id")Long id,CityDetailDTO city) throws BusinessLogicException
+    {
+        System.out.println("AAAA "+city);
+        if(city==null)return null;
+        CityEntity entity=city.toEntity();
+        CityDetailDTO temp=new CityDetailDTO(cityLogic.update(id, entity));
+        return temp;
+    }
+    
+    
+    /*
+    @GET
+    @Path("{name: [a-zA-Z]}")
+    public CityDetailDTO getCity(@PathParam("name")String name)
+    {
+        CityDetailDTO c=null;
+        for(CityEntity e:cityLogic.getCities())
+        {
+            if(e.getName().equals(name)) 
+            {
+                c=new CityDetailDTO(e);
+                break;
+            }
+        }
+        return c;
+    }
+    */
 }
